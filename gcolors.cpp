@@ -37,9 +37,9 @@ typedef enum {O_HANDLES = 0};
 #define	ID_H					301
 #define	ID_S					302
 #define	ID_L					303
-#define	ID_R					304
-#define	ID_G					305
-#define	ID_B					306
+//#define	ID_R					304
+//#define	ID_G					305
+//#define	ID_B					306
 #define	ID_SLIDER				307
 
 #define NELEMS(a)  (sizeof(a) / sizeof((a)[0]))
@@ -882,7 +882,36 @@ static void HSLChanged(HWND hCustom){
 static void RGBChanged(HWND hCustom){
 	COLORREF			crColor;
 	PCUSTHANDLES 		pcth = GetCustHandles(hCustom);
+	UNIT vk;
+	COLORREF ID_R, ID_G, ID_B;
 
+	if(vk == VK_ESCAPE){
+		if(vk == VK_NUMPAD1){
+			ID_R = 255;
+			ID_G = 0;
+			ID_B = 0;
+		}
+		if(vk == VK_NUMPAD2){
+			ID_R = 0;
+			ID_G = 84;
+			ID_B = 255;
+		}
+		if(vk == VK_NUMPAD3){
+			ID_R = 255;
+			ID_G = 127;
+			ID_B = 0;
+		}
+		if(vk == VK_NUMPAD4){
+			ID_R = 185;
+			ID_G = 90;
+			ID_B = 255;
+		}
+		if(vk == VK_NUMPAD0){
+			int nAlphaBlend = 140;
+			SetWindowLong(m_hWnd, GWL_EXSTYLE);
+			GetWindowLong(m_hWnd, GWL_EXSTYLE | WS_EX_LAYERED);
+			SetLayeredWindowAttributes(m_hWnd, 0, nAlphaBlend, LWA_ALPHA);
+	}
 	bRaiseUpdate = FALSE;
 	crColor = RGB(GetDlgItemInt(hCustom, ID_R, NULL, FALSE), GetDlgItemInt(hCustom, ID_G, NULL, FALSE), GetDlgItemInt(hCustom, ID_B, NULL, FALSE));
 	if(pcth->hBrush)
